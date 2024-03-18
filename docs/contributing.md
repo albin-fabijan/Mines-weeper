@@ -12,12 +12,6 @@
 
 ## Conventions branches
 
-### Branches permanentes
-* main:
-    * La branche main doit être stable pour les utilisateurs 
-* dev:
-    * La branche dev doit être stable pour les développeurs
-
 ### Noms de Branches temporaires
 * categorie/description-en-francais
 * categories de branches:

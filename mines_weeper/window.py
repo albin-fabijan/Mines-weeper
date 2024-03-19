@@ -5,6 +5,8 @@ class Window:
     def __init__(self, WIDTH, HEIGHT):
         pygame.init()
 
+        self.running = True
+
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))

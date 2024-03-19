@@ -9,14 +9,32 @@ from .window import Window
 class SelectMenu(Window):
     def __init__(self):
         super().__init__(350, 350)
+        self.main_loop()
 
-        self.DARK = (0, 0, 0)
-        self.BRUN = (200, 173, 127)
-
-        self.background_img, self.button_img = self.load_images()
-
-        self.difficulty = self.main_loop()
-        print("Difficulté sélectionnée :", self.difficulty)
+    def main_loop(self):
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Récupérer les coordonnées de la souris au moment du clic
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    # Vérifier si le clic est sur un des boutons
+                    if easy_button_rect.collidepoint(mouse_x, mouse_y):
+                        print("Difficulté sélectionnée : 1")
+                        self.running = False
+                        break
+                    elif normal_button_rect.collidepoint(mouse_x, mouse_y):
+                        print("Difficulté sélectionnée : 1")
+                        self.running = False
+                        break
+                    elif expert_button_rect.collidepoint(mouse_x, mouse_y):
+                        print("Difficulté sélectionnée : 1")
+                        self.running = False
+                        break
+            
+            easy_button_rect, normal_button_rect, expert_button_rect = self.display()
 
     def load_images(self):
         image = pygame.image.load(paths.select_sprite("menu_background.png"))
@@ -30,39 +48,30 @@ class SelectMenu(Window):
 
         return background_img, button_img
 
-    def main_loop(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    # Récupérer les coordonnées de la souris au moment du clic
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    # Vérifier si le clic est sur un des boutons
-                    if easy_button_rect.collidepoint(mouse_x, mouse_y):
-                        return 1
-                    elif normal_button_rect.collidepoint(mouse_x, mouse_y):
-                        return 2
-                    elif expert_button_rect.collidepoint(mouse_x, mouse_y):
-                        return 3
+    def display(self):
+        DARK = (0, 0, 0)
+        BRUN = (200, 173, 127)
 
-            # Dessiner l'arrière-plan
-            self.screen.fill(self.BRUN)
-            self.screen.blit(self.background_img, (0, 0))
+        background_img, button_img = self.load_images()
 
-            # Dessiner les boutons
-            easy_button_rect = self.button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 - 50))
-            self.screen.blit(self.button_img, easy_button_rect)
-            self.draw_text("Facile", self.font, self.DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 - 50)
+        # Dessiner l'arrière-plan
+        self.screen.fill(BRUN)
+        self.screen.blit(background_img, (0, 0))
 
-            normal_button_rect = self.button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2))
-            self.screen.blit(self.button_img, normal_button_rect)
-            self.draw_text("Normal", self.font, self.DARK, self.screen, self.WIDTH//2, self.HEIGHT//2)
+        # Dessiner les boutons
+        easy_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 - 50))
+        self.screen.blit(button_img, easy_button_rect)
+        self.draw_text("Facile", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 - 50)
 
-            expert_button_rect = self.button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
-            self.screen.blit(self.button_img, expert_button_rect)
-            self.draw_text("Expert", self.font, self.DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 + 50)
+        normal_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2))
+        self.screen.blit(button_img, normal_button_rect)
+        self.draw_text("Normal", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2)
 
-            # Mettre à jour l'affichage
-            pygame.display.flip()
+        expert_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
+        self.screen.blit(button_img, expert_button_rect)
+        self.draw_text("Expert", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 + 50)
+
+        # Mettre à jour l'affichage
+        pygame.display.flip()
+
+        return easy_button_rect, normal_button_rect, expert_button_rect

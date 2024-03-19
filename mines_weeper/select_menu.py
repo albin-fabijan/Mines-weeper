@@ -10,22 +10,34 @@ class SelectMenu(Window):
         pygame.display.set_caption("Menu de Sélection de Difficulté")
         self.font = pygame.font.Font(None, 36)
 
-        self.p = Paths()
-
         self.main_loop()
 
     def main_loop(self):
         while self.running:
-            easy_button_rect, normal_button_rect, expert_button_rect = self.get_rects()
-            self.input_loop(easy_button_rect, normal_button_rect, expert_button_rect)
-            self.display(easy_button_rect, normal_button_rect, expert_button_rect)
+            (
+                easy_button_rect,
+                normal_button_rect,
+                expert_button_rect
+            ) = self.get_rects()
+
+            self.input_loop(
+                easy_button_rect,
+                normal_button_rect,
+                expert_button_rect
+            )
+            self.display(
+                easy_button_rect,
+                normal_button_rect,
+                expert_button_rect
+            )
 
     def load_images(self):
-        image = pygame.image.load(self.p.select_sprite("menu_background.png"))
+        p = Paths()
+        image = pygame.image.load(p.select_sprite("menu_background.png"))
         scale = image.get_size()
         background_img = pygame.transform.scale(image , (350,350))
 
-        image = pygame.image.load(self.p.select_sprite("button.png"))
+        image = pygame.image.load(p.select_sprite("button.png"))
         scale = image.get_size()
         button_img = pygame.transform.scale(
             image,

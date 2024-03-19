@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+import paths
+
 pygame.init()
 
 # Couleurs
@@ -24,12 +26,12 @@ def draw_text(text, font, color, surface, x, y):
 def main():
 
     # Chargement de l'image de fond
-    image = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\1.png')
+    image = pygame.image.load(paths.select_sprite("1.png"))
     scale = image.get_size()
     background_img = pygame.transform.scale(image , (350,350))
 
     # Chargement des images des boutons
-    image = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\button.png')
+    image = pygame.image.load(paths.select_sprite("button.png"))
     scale = image.get_size()
     button_img = pygame.transform.scale(image , (int(scale [0] * 2), int(scale [1]* 2)))
 

@@ -34,7 +34,9 @@ class SelectMenu(Window):
                         self.running = False
                         break
             
-            easy_button_rect, normal_button_rect, expert_button_rect = self.display()
+            easy_button_rect, normal_button_rect, expert_button_rect = self.get_rects()
+
+            self.display(easy_button_rect, normal_button_rect, expert_button_rect)
 
     def load_images(self):
         image = pygame.image.load(paths.select_sprite("menu_background.png"))
@@ -48,7 +50,16 @@ class SelectMenu(Window):
 
         return background_img, button_img
 
-    def display(self):
+    def get_rects(self):
+        background_img, button_img = self.load_images()
+
+        easy_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 - 50))
+        normal_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2))
+        expert_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
+
+        return easy_button_rect, normal_button_rect, expert_button_rect
+
+    def display(self, easy_button_rect, normal_button_rect, expert_button_rect):
         DARK = (0, 0, 0)
         BRUN = (200, 173, 127)
 
@@ -59,19 +70,14 @@ class SelectMenu(Window):
         self.screen.blit(background_img, (0, 0))
 
         # Dessiner les boutons
-        easy_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 - 50))
         self.screen.blit(button_img, easy_button_rect)
         self.draw_text("Facile", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 - 50)
 
-        normal_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2))
         self.screen.blit(button_img, normal_button_rect)
         self.draw_text("Normal", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2)
 
-        expert_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
         self.screen.blit(button_img, expert_button_rect)
         self.draw_text("Expert", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 + 50)
 
         # Mettre à jour l'affichage
         pygame.display.flip()
-
-        return easy_button_rect, normal_button_rect, expert_button_rect

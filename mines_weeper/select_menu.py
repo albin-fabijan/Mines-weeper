@@ -26,7 +26,7 @@ def draw_text(text, font, color, surface, x, y):
 def main():
 
     # Chargement de l'image de fond
-    image = pygame.image.load(paths.select_sprite("1.png"))
+    image = pygame.image.load(paths.select_sprite("menu_background.png"))
     scale = image.get_size()
     background_img = pygame.transform.scale(image , (350,350))
 

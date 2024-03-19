@@ -13,28 +13,9 @@ class SelectMenu(Window):
 
     def main_loop(self):
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    # Récupérer les coordonnées de la souris au moment du clic
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    # Vérifier si le clic est sur un des boutons
-                    if easy_button_rect.collidepoint(mouse_x, mouse_y):
-                        print("Difficulté sélectionnée : 1")
-                        self.running = False
-                        break
-                    elif normal_button_rect.collidepoint(mouse_x, mouse_y):
-                        print("Difficulté sélectionnée : 1")
-                        self.running = False
-                        break
-                    elif expert_button_rect.collidepoint(mouse_x, mouse_y):
-                        print("Difficulté sélectionnée : 1")
-                        self.running = False
-                        break
-            
             easy_button_rect, normal_button_rect, expert_button_rect = self.get_rects()
+
+            self.input_loop(easy_button_rect, normal_button_rect, expert_button_rect)
 
             self.display(easy_button_rect, normal_button_rect, expert_button_rect)
 
@@ -58,6 +39,28 @@ class SelectMenu(Window):
         expert_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
 
         return easy_button_rect, normal_button_rect, expert_button_rect
+
+    def input_loop(self, easy_button_rect, normal_button_rect, expert_button_rect):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Récupérer les coordonnées de la souris au moment du clic
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                # Vérifier si le clic est sur un des boutons
+                if easy_button_rect.collidepoint(mouse_x, mouse_y):
+                    print("Difficulté sélectionnée : 1")
+                    self.running = False
+                    break
+                elif normal_button_rect.collidepoint(mouse_x, mouse_y):
+                    print("Difficulté sélectionnée : 1")
+                    self.running = False
+                    break
+                elif expert_button_rect.collidepoint(mouse_x, mouse_y):
+                    print("Difficulté sélectionnée : 1")
+                    self.running = False
+                    break
 
     def display(self, easy_button_rect, normal_button_rect, expert_button_rect):
         DARK = (0, 0, 0)

@@ -1,5 +1,3 @@
-import sys
-
 import pygame
 
 from . import paths
@@ -43,8 +41,8 @@ class SelectMenu(Window):
     def input_loop(self, easy_button_rect, normal_button_rect, expert_button_rect):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                self.running = False
+                break
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):

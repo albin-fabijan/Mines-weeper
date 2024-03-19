@@ -17,15 +17,7 @@ class SelectMenu(Window):
         print("Difficulté sélectionnée :", self.difficulty)
 
     def main(self):
-        # Chargement de l'image de fond
-        image = pygame.image.load(paths.select_sprite("menu_background.png"))
-        scale = image.get_size()
-        background_img = pygame.transform.scale(image , (350,350))
-
-        # Chargement des images des boutons
-        image = pygame.image.load(paths.select_sprite("button.png"))
-        scale = image.get_size()
-        button_img = pygame.transform.scale(image , (int(scale [0] * 2), int(scale [1]* 2)))
+        background_img, button_img = self.load_images()
 
         while True:
             for event in pygame.event.get():
@@ -62,3 +54,15 @@ class SelectMenu(Window):
 
             # Mettre à jour l'affichage
             pygame.display.flip()
+
+    def load_images(self):
+        image = pygame.image.load(paths.select_sprite("menu_background.png"))
+        scale = image.get_size()
+        background_img = pygame.transform.scale(image , (350,350))
+
+        # Chargement des images des boutons
+        image = pygame.image.load(paths.select_sprite("button.png"))
+        scale = image.get_size()
+        button_img = pygame.transform.scale(image , (int(scale [0] * 2), int(scale [1]* 2)))
+
+        return background_img, button_img

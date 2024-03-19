@@ -70,7 +70,12 @@ class SelectMenu(Window):
 
         return easy_button_rect, normal_button_rect, expert_button_rect
 
-    def input_loop(self, easy_button_rect, normal_button_rect, expert_button_rect):
+    def input_loop(
+        self,
+        easy_button_rect,
+        normal_button_rect,
+        expert_button_rect
+    ):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -93,7 +98,12 @@ class SelectMenu(Window):
                     self.running = False
                     break
 
-    def display(self, easy_button_rect, normal_button_rect, expert_button_rect):
+    def display(
+        self,
+        easy_button_rect,
+        normal_button_rect,
+        expert_button_rect
+    ):
         DARK = (0, 0, 0)
         BRUN = (200, 173, 127)
 

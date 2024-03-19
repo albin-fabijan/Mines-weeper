@@ -10,9 +10,6 @@ class Window:
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Menu de Sélection de Difficulté")
-
-        self.font = pygame.font.Font(None, 36)
 
     def draw_text(self, text, font, color, surface, x, y):
         text_obj = font.render(text, True, color)

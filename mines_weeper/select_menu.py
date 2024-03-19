@@ -9,14 +9,15 @@ from .window import Window
 class SelectMenu(Window):
     def __init__(self):
         super().__init__(350, 350)
+        pygame.display.set_caption("Menu de Sélection de Difficulté")
+        self.font = pygame.font.Font(None, 36)
+
         self.main_loop()
 
     def main_loop(self):
         while self.running:
             easy_button_rect, normal_button_rect, expert_button_rect = self.get_rects()
-
             self.input_loop(easy_button_rect, normal_button_rect, expert_button_rect)
-
             self.display(easy_button_rect, normal_button_rect, expert_button_rect)
 
     def load_images(self):

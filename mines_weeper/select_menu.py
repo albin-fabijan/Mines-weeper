@@ -25,16 +25,34 @@ class SelectMenu(Window):
 
         image = pygame.image.load(paths.select_sprite("button.png"))
         scale = image.get_size()
-        button_img = pygame.transform.scale(image , (int(scale [0] * 2), int(scale [1]* 2)))
+        button_img = pygame.transform.scale(
+            image,
+            (int(scale [0] * 2), int(scale [1]* 2))
+        )
 
         return background_img, button_img
 
     def get_rects(self):
         background_img, button_img = self.load_images()
 
-        easy_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 - 50))
-        normal_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2))
-        expert_button_rect = button_img.get_rect(center=(self.WIDTH//2, self.HEIGHT//2 + 50))
+        easy_button_rect = button_img.get_rect(
+            center=(
+                self.WIDTH//2,
+                self.HEIGHT//2 - 50
+            )
+        )
+        normal_button_rect = button_img.get_rect(
+            center=(
+                self.WIDTH//2,
+                self.HEIGHT//2
+            )
+        )
+        expert_button_rect = button_img.get_rect(
+            center=(
+                self.WIDTH//2,
+                self.HEIGHT//2 + 50
+            )
+        )
 
         return easy_button_rect, normal_button_rect, expert_button_rect
 
@@ -43,16 +61,19 @@ class SelectMenu(Window):
             if event.type == pygame.QUIT:
                 self.running = False
                 break
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
                     self.running = False
                     break
+
                 elif normal_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
                     self.running = False
                     break
+
                 elif expert_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
                     self.running = False
@@ -68,12 +89,33 @@ class SelectMenu(Window):
         self.screen.blit(background_img, (0, 0))
 
         self.screen.blit(button_img, easy_button_rect)
-        self.draw_text("Facile", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 - 50)
+        self.draw_text(
+            "Facile",
+            self.font,
+            DARK,
+            self.screen,
+            self.WIDTH//2,
+            self.HEIGHT//2 - 50
+        )
 
         self.screen.blit(button_img, normal_button_rect)
-        self.draw_text("Normal", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2)
+        self.draw_text(
+            "Normal",
+            self.font,
+            DARK,
+            self.screen,
+            self.WIDTH//2,
+            self.HEIGHT//2
+        )
 
         self.screen.blit(button_img, expert_button_rect)
-        self.draw_text("Expert", self.font, DARK, self.screen, self.WIDTH//2, self.HEIGHT//2 + 50)
+        self.draw_text(
+            "Expert",
+            self.font,
+            DARK,
+            self.screen,
+            self.WIDTH//2,
+            self.HEIGHT//2 + 50
+        )
 
         pygame.display.flip()

@@ -1,5 +1,6 @@
-import pygame
 import sys
+
+import pygame
 
 from . import paths
 from .window import Window

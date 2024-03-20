@@ -14,7 +14,7 @@ class Matrix :
         self.__group = group
         self.__matrix_size = matrix_size
         self.__matrix = []
-        print(self.__matrix_size)
+        # print(self.__matrix_size)
         for i in range(self.__matrix_size) :
             newL = []
             for j in range(self.__matrix_size) :
@@ -48,14 +48,14 @@ class Matrix :
                 
                 # print(self.__matrix[i][j].get_grid_pos(), end="")
                 # print(self.__matrix[i][j].get_bomb())
-        print(f"Number of bombs : {bombs_placed}, {self.__matrix[pos1][pos2].get_bomb()}, {pos1}, {pos2}")
+        # print(f"Number of bombs : {bombs_placed}, {self.__matrix[pos1][pos2].get_bomb()}, {pos1}, {pos2}")
         for i in range(self.__matrix_size) :
             for j in range(self.__matrix_size) :
                 neighbors = self.get_neighbors(self.__matrix[i][j].get_grid_pos())
                 bombs = 0
                 if (self.__matrix[i][j].get_bomb()) :
                     bombs = -1
-                    print("bomb")
+                    # print("bomb")
                 else :
                     for n in neighbors :
                         if (n.get_bomb()) :
@@ -65,9 +65,6 @@ class Matrix :
 
     def has_lost(self) :
         return self.__lost
-
-    def flag(self, pos:tuple) :
-        self.__matrix[pos[0]][pos[1]].set_flag((self.__matrix[pos[0]][pos[1]].get_flag()+1)%3)
 
     def get_neighbors(self, pos:tuple) :
         neighbors = []
@@ -90,13 +87,14 @@ class Matrix :
         return neighbors
 
     def click(self, pos:tuple) :
-        print("click " + str(pos), end="")
+        # print("click " + str(pos), end="")
         if (self.__first_click) :
             self.__first_click = False
-            print("first")
+            # print("first")
             self.first_click(pos)
         if (self.__matrix[pos[0]][pos[1]].get_bomb()) :
-            print("bomb")
+            # print("bomb")
+            self.__matrix[pos[0]][pos[1]].set_clicked(True)
             self.__lost = True
         else : 
             neighbors = self.get_neighbors(pos)
@@ -105,7 +103,7 @@ class Matrix :
                 if (n.get_bomb()) :
                     num_bombs += 1
             self.__matrix[pos[0]][pos[1]].set_clicked(True)
-            print(num_bombs)
+            # print(num_bombs)
             if (num_bombs == 0) :
                 if (pos[0]>0 and pos[1]> 0) :
                     if (not self.__matrix[pos[0]-1][pos[1]-1].get_clicked()) :
@@ -133,13 +131,23 @@ class Matrix :
                         self.click((pos[0]+1, pos[1]+1))
 
     def check_win(self) :
+        bombs = []
+        for c in self.get_cases() :
+            if (c.get_bomb()) :
+                bombs.append(c)
+            if (not c.get_bomb() and not c.get_clicked()) :
+                return False
+        for b in bombs :
+            print(b.get_grid_pos())
+            print(self.get_case(b.get_grid_pos()).get_flag())
+            if (self.get_case(b.get_grid_pos()) == 1) :
+                return True
+        return False
+    
+    def check_lose(self) :
         if (self.__lost) :
             return True
-        for l in self.__matrix :
-            for c in l :
-                if (not c.get_bomb() and c.get_clicked()) :
-                    return False
-        return True
+        return False
     
     def get_matrix_size(self) :
         return self.__matrix_size

@@ -1,32 +1,66 @@
-import Case
+import Case as C
 import random
+import pygame
 
 class Matrix :
     __bombs = 0
-    __matrix = []
     __lost = False
+    __first_click = True
+    __matrix_size = 0
 
-    def __init__(self, bombs:tuple, matrix_size:int, clicked:tuple) :
+    def __init__(self, bombs:tuple, matrix_size:int, group:pygame.sprite.Group) :
         self.__bombs = random.randint(bombs[0], bombs[1])
-        bombs_placed = 0
-        x = 0
-        for i in range(matrix_size) :
+        self.__lost = False
+        self.__group = group
+        self.__matrix_size = matrix_size
+        self.__matrix = []
+        print(self.__matrix_size)
+        for i in range(self.__matrix_size) :
             newL = []
-            for j in range(matrix_size) :
-                if (i == clicked[0] and j == clicked[1]) :
-                    newCase = Case.Case(False)
-                    x = -1
-                else :
-                    rand = random.randint(0, (matrix_size*matrix_size)-((i*matrix_size)+j))
-                    if (rand < self.__bombs - bombs_placed) :
-                        newCase = Case.Case(True)
-                        x = 1
-                        bombs_placed += 1
-                    else :
-                        newCase = Case.Case(False)
-                        x = 2
+            for j in range(self.__matrix_size) :
+                newCase = C.Case(False, (i, j), self, group)
                 newL.append(newCase)
             self.__matrix.append(newL)
+        
+    def first_click(self, clicked:tuple) :
+        bombs_placed = 0
+        pos1 = 0
+        pos2 = 0
+        for i in range(self.__matrix_size) :
+            # newL = []
+            # self.__matrix.append(newL)
+            for j in range(self.__matrix_size) :
+                # print(bombs_placed, end="")
+                if (i == clicked[0] and j == clicked[1]) :
+                    newCase = C.Case(False, (i, j), self, self.__group)
+                else :
+                    rand = random.randint(0, (self.__matrix_size*self.__matrix_size)-((i*self.__matrix_size)+j))
+                    if (rand < self.__bombs - bombs_placed) :
+                        newCase = C.Case(True, (i, j), self, self.__group)
+                        # print(newCase.get_bomb(), end="")
+                        pos1 = i
+                        pos2 = j
+                        bombs_placed += 1
+                    else :
+                        newCase = C.Case(False, (i, j), self, self.__group)
+                self.__matrix[i][j] = newCase
+                # self.__matrix[i].append(newCase)
+                
+                # print(self.__matrix[i][j].get_grid_pos(), end="")
+                # print(self.__matrix[i][j].get_bomb())
+        print(f"Number of bombs : {bombs_placed}, {self.__matrix[pos1][pos2].get_bomb()}, {pos1}, {pos2}")
+        for i in range(self.__matrix_size) :
+            for j in range(self.__matrix_size) :
+                neighbors = self.get_neighbors(self.__matrix[i][j].get_grid_pos())
+                bombs = 0
+                if (self.__matrix[i][j].get_bomb()) :
+                    bombs = -1
+                    print("bomb")
+                else :
+                    for n in neighbors :
+                        if (n.get_bomb()) :
+                            bombs += 1
+                self.__matrix[i][j].set_num_bombs(bombs)
         self.click((clicked[0], clicked[1]))
 
     def has_lost(self) :
@@ -41,22 +75,28 @@ class Matrix :
             neighbors.append(self.__matrix[pos[0]-1][pos[1]-1])
         if (pos[0]>0) :
             neighbors.append(self.__matrix[pos[0]-1][pos[1]])
-        if (pos[0]>0 and pos[1]< len(self.__matrix)-1) :
+        if (pos[0]>0 and pos[1]< self.get_matrix_size()-1) :
             neighbors.append(self.__matrix[pos[0]-1][pos[1]+1])
         if (pos[1]> 0) :
             neighbors.append(self.__matrix[pos[0]][pos[1]-1])
-        if (pos[1]< len(self.__matrix)-1) :
+        if (pos[1]< self.get_matrix_size()-1) :
             neighbors.append(self.__matrix[pos[0]][pos[1]+1])
-        if (pos[0]< len(self.__matrix[0])-1 and pos[1]> 0) :
+        if (pos[0]< self.get_matrix_size()-1 and pos[1]> 0) :
             neighbors.append(self.__matrix[pos[0]+1][pos[1]-1])
-        if (pos[0]< len(self.__matrix[0])-1 and pos[1]> 0) :
+        if (pos[0]< self.get_matrix_size()-1) :
             neighbors.append(self.__matrix[pos[0]+1][pos[1]])
-        if (pos[0]< len(self.__matrix[0])-1 and pos[1]< len(self.__matrix)-1) :
+        if (pos[0]< self.get_matrix_size()-1 and pos[1]< self.get_matrix_size()-1) :
             neighbors.append(self.__matrix[pos[0]+1][pos[1]+1])
         return neighbors
 
     def click(self, pos:tuple) :
+        print("click " + str(pos), end="")
+        if (self.__first_click) :
+            self.__first_click = False
+            print("first")
+            self.first_click(pos)
         if (self.__matrix[pos[0]][pos[1]].get_bomb()) :
+            print("bomb")
             self.__lost = True
         else : 
             neighbors = self.get_neighbors(pos)
@@ -65,7 +105,7 @@ class Matrix :
                 if (n.get_bomb()) :
                     num_bombs += 1
             self.__matrix[pos[0]][pos[1]].set_clicked(True)
-            self.__matrix[pos[0]][pos[1]].set_num_bombs(num_bombs)
+            print(num_bombs)
             if (num_bombs == 0) :
                 if (pos[0]>0 and pos[1]> 0) :
                     if (not self.__matrix[pos[0]-1][pos[1]-1].get_clicked()) :
@@ -73,22 +113,22 @@ class Matrix :
                 if (pos[0]>0) :
                     if (not self.__matrix[pos[0]-1][pos[1]].get_clicked()) :
                         self.click((pos[0]-1, pos[1]))
-                if (pos[0]>0 and pos[1]< len(self.__matrix)-1) :
+                if (pos[0]>0 and pos[1]< self.get_matrix_size()-1) :
                     if (not self.__matrix[pos[0]-1][pos[1]+1].get_clicked()) :
                         self.click((pos[0]-1, pos[1]+1))
-                if (pos[0]>0 and pos[1]> 0) :
+                if (pos[1]> 0) :
                     if (not self.__matrix[pos[0]][pos[1]-1].get_clicked()) :
                         self.click((pos[0], pos[1]-1))
-                if (pos[0]>0 and pos[1]< len(self.__matrix)-1) :
+                if (pos[1]< self.get_matrix_size()-1) :
                     if (not self.__matrix[pos[0]][pos[1]+1].get_clicked()) :
                         self.click((pos[0], pos[1]+1))
-                if (pos[0]< len(self.__matrix[0])-1 and pos[1]> 0) :
+                if (pos[0]< self.get_matrix_size()-1 and pos[1]> 0) :
                     if (not self.__matrix[pos[0]+1][pos[1]-1].get_clicked()) :
                         self.click((pos[0]+1, pos[1]-1))
-                if (pos[0]< len(self.__matrix[0])-1) :
+                if (pos[0]< self.get_matrix_size()-1) :
                     if (not self.__matrix[pos[0]+1][pos[1]].get_clicked()) :
                         self.click((pos[0]+1, pos[1]))
-                if (pos[0]< len(self.__matrix[0])-1 and pos[1]< len(self.__matrix)-1) :
+                if (pos[0]< self.get_matrix_size()-1 and pos[1]< self.get_matrix_size()-1) :
                     if (not self.__matrix[pos[0]+1][pos[1]+1].get_clicked()) :
                         self.click((pos[0]+1, pos[1]+1))
 
@@ -100,6 +140,19 @@ class Matrix :
                 if (not c.get_bomb() and c.get_clicked()) :
                     return False
         return True
+    
+    def get_matrix_size(self) :
+        return self.__matrix_size
+    
+    def get_case(self, pos:tuple) :
+        return self.__matrix[pos[0]][pos[1]]
+    
+    def get_cases(self) :
+        list = []
+        for l in self.__matrix :
+            for l2 in l :
+                list.append(l2)
+        return list
 
     def show(self) :
         for l in range(len(self.__matrix)) :
@@ -134,17 +187,3 @@ class Matrix :
                     print(". ", end="")
             print("")
         print("")
-
-mat = Matrix((30, 50), 20, (3, 6))
-mat.show()
-mat.flag((5, 6))
-mat.show()
-mat.flag((5, 6))
-mat.show()
-mat.flag((5, 6)) 
-mat.show()
-while (not mat.check_win()) :
-    input_x = input("X: ")
-    input_y = input("Y: ")
-    mat.click((int(input_x), int(input_y)))
-    mat.show()

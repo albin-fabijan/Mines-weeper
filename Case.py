@@ -11,10 +11,19 @@ def on_left_click(self, click_func, reset_func):
     click_func()
     reset_func()
 
-def on_right_click(self) :
-    if (not self.get_clicked()) :
-        print(self.get_grid_pos())
-        self.set_flag((self.get_flag() + 1)%3)
+def on_right_click(self, matrix) :
+    mat_case = matrix.get_case(self.get_grid_pos())
+    if (not mat_case.get_clicked()) :
+        if (self.get_flag() == 0) :
+            self.set_flag(1)
+            mat_case.set_flag(1)
+        elif (self.get_flag() == 1) :
+            self.set_flag(2)
+            mat_case.set_flag(2)
+        elif (self.get_flag() == 2) :
+            self.set_flag(0)
+            mat_case.set_flag(0)
+
         if (self.get_flag() == 0) :
             self.set_sprite(pygame.image.load("Grid.png").convert())
         if (self.get_flag() == 1) :
@@ -23,12 +32,6 @@ def on_right_click(self) :
             self.set_sprite(pygame.image.load("question.png").convert())
 
 class Case(pygame.sprite.Sprite) :
-    #__bomb = False
-    #__clicked = False
-    #__flag = 0
-    #__num_bombs = -1
-    #__grid_pos = (0,1)
-    #__sprite = ClickableSprite.ClickableSprite(not_clicked, 0, 0, on_left_click, on_right_click)
 
     def __init__(self, bomb:bool, grid_pos:tuple, matrix:Matrix.Matrix, group:pygame.sprite.Group, clicked=False, flag=0, num_bombs=-1):
         self.__bomb = bomb
@@ -36,7 +39,7 @@ class Case(pygame.sprite.Sprite) :
         self.__clicked = clicked
         self.__flag = flag
         self.__num_bombs = num_bombs
-        self.__sprite = ClickableSprite.ClickableSprite(not_clicked, grid_pos[0]*32, grid_pos[1]*32, lambda : on_left_click(self, lambda : matrix.click(pos=grid_pos), lambda : self.reset_sprites(matrix, group)), lambda : [on_right_click(self), print(self.get_flag())])
+        self.__sprite = ClickableSprite.ClickableSprite(not_clicked, grid_pos[0]*32, grid_pos[1]*32+64, lambda : on_left_click(self, lambda : matrix.click(pos=grid_pos), lambda : self.reset_sprites(matrix, group)), lambda : on_right_click(self, matrix))
 
     def get_bomb(self) :
         return self.__bomb

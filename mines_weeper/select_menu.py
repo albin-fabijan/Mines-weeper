@@ -8,7 +8,7 @@ DARK = (0, 0, 0)
 BRUN = (200, 173, 127)
 
 # Taille de la fenêtre
-WIDTH, HEIGHT = 350, 350
+WIDTH, HEIGHT = 400, 400
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Menu de Sélection de Difficulté")
 
@@ -26,7 +26,7 @@ def main():
     # Chargement de l'image de fond
     image = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\1.png')
     scale = image.get_size()
-    background_img = pygame.transform.scale(image , (350,350))
+    background_img = pygame.transform.scale(image , (400,400))
 
     # Chargement des images des boutons
     image = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\button.png')
@@ -54,17 +54,19 @@ def main():
         screen.blit(background_img, (0, 0))
 
         # Dessiner les boutons
-        easy_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2 - 50))
+        easy_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2 ))
         screen.blit(button_img, easy_button_rect)
-        draw_text("Facile", font, DARK, screen, WIDTH//2, HEIGHT//2 - 50)
+        draw_text("Facile", font, DARK, screen, WIDTH//2, HEIGHT//2 )
 
-        normal_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2))
+        normal_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2 + 50))
         screen.blit(button_img, normal_button_rect)
-        draw_text("Normal", font, DARK, screen, WIDTH//2, HEIGHT//2)
+        draw_text("Normal", font, DARK, screen, WIDTH//2, HEIGHT//2 + 50)
 
-        expert_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2 + 50))
+        expert_button_rect = button_img.get_rect(center=(WIDTH//2, HEIGHT//2 + 100))
         screen.blit(button_img, expert_button_rect)
-        draw_text("Expert", font, DARK, screen, WIDTH//2, HEIGHT//2 + 50)
+        draw_text("Expert", font, DARK, screen, WIDTH//2, HEIGHT//2 + 100)
+
+
 
         # Mettre à jour l'affichage
         pygame.display.flip()

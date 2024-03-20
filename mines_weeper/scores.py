@@ -1,5 +1,6 @@
 import pygame
 import sys
+import json
 
 # Initialisation de Pygame
 pygame.init()
@@ -18,7 +19,7 @@ BEIGE = (63, 34, 4)
 # Police de texte
 font = pygame.font.SysFont(None, 40)
 
-def afficher_score(timer, niveau, result, pseudo ):
+def afficher_score(timer):
     # Chargement de l'image de fond
     screen.fill(BRUN)
     background_img = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\1.png')
@@ -53,43 +54,38 @@ def afficher_score(timer, niveau, result, pseudo ):
     quit_button_img.blit(quit_text, quit_rect)
     screen.blit(quit_button_img, (50, SCREEN_HEIGHT - 150))
 
-    # Affichage du pseudo
-    if pseudo == False:
-        text_pseudo = font.render("Entrée votre pseudo." , True , BLACK)
-        pseudo_rect = text_pseudo.get_rect(center=(button_img.get_width(), button_img.get_height()))
-        button_img.blit(text_pseudo,pseudo_rect)
-    else:
-        text_pseudo = font.render(f"Pseudo: {pseudo}", True, BLACK)
-        pseudo_rect = text_pseudo.get_rect(center=(button_img.get_width() // 2, button_img.get_height() // 4))
-        button_img.blit(text_pseudo, pseudo_rect)
-
-
     pygame.display.flip()
 
-def saisir_pseudo():
-    pseudo = ""
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    return pseudo
-                elif event.key == pygame.K_BACKSPACE:
-                    pseudo = pseudo[:-1]
-                else:
-                    pseudo += event.unicode
+def afficher_resultat_et_niveau(result, niveau):
+    result_text = "Gagné !" if result else "Perdu..."
+    if niveau == 1:
+        niveau_text = f"difficulté: facile"
+    elif niveau == 2:
+        niveau_text = f"difficulté: normale"
+    elif niveau == 3:
+        niveau_text = f"difficulté: difficile"
+    
+    result_font = pygame.font.SysFont(None, 60)
+    result_surface = result_font.render(result_text, True, BLACK)
+    result_rect = result_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
+
+    niveau_font = pygame.font.SysFont(None, 40)
+    niveau_surface = niveau_font.render(niveau_text, True, BLACK)
+    niveau_rect = niveau_surface.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
+
+    
+    screen.blit(result_surface, result_rect)
+    screen.blit(niveau_surface, niveau_rect)
+    pygame.display.flip()
 
 def main():
     timer = 60  # Exemple de timer
     niveau = 1  # Exemple de niveau de difficulté
     result = True  # Exemple de resultat
-    pseudo = False
+
+    afficher_score(timer)
     
-
-    afficher_score(timer, niveau, result , pseudo )
-
-    pseudo = saisir_pseudo()
-
-    afficher_score(timer, niveau, result , pseudo)
+    afficher_resultat_et_niveau(result, niveau)
 
 
     while True:

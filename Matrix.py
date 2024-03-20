@@ -123,8 +123,6 @@ class Matrix :
             if (not c.get_bomb() and not c.get_clicked()) :
                 return False
         for b in bombs :
-            print(b.get_grid_pos())
-            print(self.get_case(b.get_grid_pos()).get_flag())
             if (not self.get_case(b.get_grid_pos()).get_flag() == 1) : # c'est ça qu'il faut regarder
                 return False
         return True

@@ -22,11 +22,11 @@ font = pygame.font.SysFont(None, 40)
 def afficher_score(timer):
     # Chargement de l'image de fond
     screen.fill(BRUN)
-    background_img = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\1.png')
+    background_img = pygame.image.load('1.png')
     background_img = pygame.transform.scale(background_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Chargement de l'image du score
-    button_img = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\button.png')
+    button_img = pygame.image.load('button.png')
     button_img = pygame.transform.scale(button_img, (450, 100))
 
     # Affichage du score
@@ -39,7 +39,7 @@ def afficher_score(timer):
     screen.blit(button_img, (SCREEN_WIDTH // 2 - button_img.get_width() // 2, 50))
 
     # Affichage du bouton "Recommencer" avec le texte
-    restart_button_img = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\select.png')
+    restart_button_img = pygame.image.load('select.png')
     restart_button_img = pygame.transform.scale(restart_button_img, (200, 100))
     restart_text = font.render("Recommencer", True, BEIGE)
     restart_rect = restart_text.get_rect(center=(restart_button_img.get_width() // 2, restart_button_img.get_height() // 2))
@@ -47,7 +47,7 @@ def afficher_score(timer):
     screen.blit(restart_button_img, (SCREEN_WIDTH - 250, SCREEN_HEIGHT - 150))
 
     # Affichage du bouton "Quitter" avec le texte
-    quit_button_img = pygame.image.load('C:\\Users\\étude\\Documents\\Mines-weeper\\mines_weeper\\select.png')
+    quit_button_img = pygame.image.load('select.png')
     quit_button_img = pygame.transform.scale(quit_button_img, (200, 100))
     quit_text = font.render("Quitter", True, BEIGE)
     quit_rect = quit_text.get_rect(center=(quit_button_img.get_width() // 2, quit_button_img.get_height() // 2))

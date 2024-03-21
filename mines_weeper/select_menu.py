@@ -120,16 +120,19 @@ class SelectMenu(Window):
                 mouse_x, mouse_y = pygame.mouse.get_pos()
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
+                    return 1
                     self.running = False
                     break
 
                 elif normal_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
+                    return 2
                     self.running = False
                     break
 
                 elif expert_button_rect.collidepoint(mouse_x, mouse_y):
                     print("Difficulté sélectionnée : 1")
+                    return 3
                     self.running = False
                     break
 

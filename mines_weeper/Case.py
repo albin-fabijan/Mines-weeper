@@ -82,7 +82,7 @@ class Case(pygame.sprite.Sprite) :
                 self.set_flag(1)
                 mat_case.set_flag(1)
             elif (self.flag == 1) :
-                self.flag(2)
+                self.set_flag(2)
                 mat_case.set_flag(2)
             elif (self.flag == 2) :
                 self.set_flag(0)

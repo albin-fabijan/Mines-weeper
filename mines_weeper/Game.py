@@ -12,6 +12,7 @@ class Game(Window):
 
         self.matrix_size = matrix_size
         self.bomb_number_range = bomb_number_range
+        self.start_time = pygame.time.get_ticks()
 
         self.not_clicked = pygame.image.load(
             Paths().select_sprite("grid.png")
@@ -48,15 +49,11 @@ class Game(Window):
                     print("lose")
                 if self.matrix.check_win() :
                     print("win")
-
-                if event.type != pygame.MOUSEBUTTONDOWN:
-                    continue
-
-                mouse_x, mouse_y = pygame.mouse.get_pos()
                 
             self.group.update(events)
             self.screen.fill((255, 255, 255))
             self.group.draw(self.screen)
+            print((pygame.time.get_ticks() - self.start_time) / 1000)
             pygame.display.flip()
         
         pygame.quit()

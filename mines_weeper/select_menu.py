@@ -2,6 +2,7 @@ import pygame
 
 from .paths import Paths
 from .window import Window
+from .Game import Game
 
 
 class SelectMenu(Window):
@@ -100,6 +101,9 @@ class SelectMenu(Window):
         normal_button_rect,
         expert_button_rect
     ):
+        if not self.running:
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -118,19 +122,24 @@ class SelectMenu(Window):
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
+                if len(self.player_name) == 0:
+                    continue
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):
-                    print("Difficulté sélectionnée : 1")
+                    Game(8,(6, 8))
                     self.running = False
+                    pygame.quit()
                     break
 
                 elif normal_button_rect.collidepoint(mouse_x, mouse_y):
-                    print("Difficulté sélectionnée : 1")
+                    Game(12, (16, 24))
                     self.running = False
+                    pygame.quit()
                     break
 
                 elif expert_button_rect.collidepoint(mouse_x, mouse_y):
-                    print("Difficulté sélectionnée : 1")
+                    Game(16, (48, 64))
                     self.running = False
+                    pygame.quit()
                     break
 
     def display(
@@ -140,6 +149,9 @@ class SelectMenu(Window):
         normal_button_rect,
         expert_button_rect
     ):
+        if not self.running:
+            return
+
         DARK = (0, 0, 0)
         BRUN = (200, 173, 127)
 

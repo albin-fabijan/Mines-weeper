@@ -8,7 +8,15 @@ def on_left_click():
 
 def on_right_click() :
     sprite.image = pygame.image.load("mines_weeper/sprites/flag.png").convert()
- 
+
+dif = 0
+ok = False
+while (not ok) :
+    dif = int(input("difficulty (1-3) : "))
+    if (not (dif < 1 or dif > 3)) :
+        ok = True
+    print(ok)
+
 matrix_size = 20
 
 pygame.init()
@@ -32,8 +40,13 @@ running = True
 while running:
     events = pygame.event.get()
     for event in events:
-        if event.type == pygame.QUIT or matrix.check_lose() or matrix.check_win():
+        if event.type == pygame.QUIT:
             running = False
+        if matrix.check_lose() :
+            print("lose")
+        if matrix.check_win() :
+            print("win")
+
 
     group.update(events)
     screen.fill((255, 255, 255))

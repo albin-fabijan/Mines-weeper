@@ -103,3 +103,5 @@ class Case(pygame.sprite.Sprite) :
             group.remove(sprite)
         for sprite in sprites :
             group.add(sprite)
+
+pygame.quit()

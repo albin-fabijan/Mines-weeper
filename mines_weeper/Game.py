@@ -1,20 +1,20 @@
 import pygame 
-import ClickableSprite
+import ClickableSprite as ClickableSprite
 import Case as C
-import Matrix
+import Matrix as Matrix
  
 def on_left_click():
-    sprite.image = pygame.image.load("empty.png").convert()
+    sprite.image = pygame.image.load("mines_weeper/sprites/empty.png").convert()
 
 def on_right_click() :
-    sprite.image = pygame.image.load("flag.png").convert()
+    sprite.image = pygame.image.load("mines_weeper/sprites/flag.png").convert()
  
 matrix_size = 20
 
 pygame.init()
 screen = pygame.display.set_mode((matrix_size*32, matrix_size*32+64))
 
-not_clicked = pygame.image.load("grid.png").convert()
+not_clicked = pygame.image.load("mines_weeper/sprites/grid.png").convert()
 
 sprite = ClickableSprite.ClickableSprite(not_clicked, 50, 50, on_left_click, on_right_click)
 

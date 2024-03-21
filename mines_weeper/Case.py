@@ -1,11 +1,11 @@
 import pygame
-import ClickableSprite
-import Matrix
+import ClickableSprite as ClickableSprite
+import Matrix as Matrix
 
 pygame.init()
 
 screen = pygame.display.set_mode((20*32, 20*32))
-not_clicked = pygame.image.load("grid.png").convert()
+not_clicked = pygame.image.load("mines_weeper/sprites/grid.png").convert()
 
 def on_left_click(self, click_func, reset_func):
     click_func()
@@ -25,11 +25,11 @@ def on_right_click(self, matrix) :
             mat_case.set_flag(0)
 
         if (self.get_flag() == 0) :
-            self.set_sprite(pygame.image.load("Grid.png").convert())
+            self.set_sprite(pygame.image.load("mines_weeper/sprites/Grid.png").convert())
         if (self.get_flag() == 1) :
-            self.set_sprite(pygame.image.load("flag.png").convert())
+            self.set_sprite(pygame.image.load("mines_weeper/sprites/flag.png").convert())
         if (self.get_flag() == 2) :
-            self.set_sprite(pygame.image.load("question.png").convert())
+            self.set_sprite(pygame.image.load("mines_weeper/sprites/question.png").convert())
 
 class Case(pygame.sprite.Sprite) :
 
@@ -76,20 +76,20 @@ class Case(pygame.sprite.Sprite) :
         if (self.__clicked) :
             if (num_bombs == -1) :
                 self.set_flag(0)
-                return pygame.image.load("mine.png").convert()
+                return pygame.image.load("mines_weeper/sprites/mine.png").convert()
             if (num_bombs == 0) :
                 self.set_flag(0)
-                return pygame.image.load("empty.png").convert()
+                return pygame.image.load("mines_weeper/sprites/empty.png").convert()
             if (num_bombs >= 1) :
                 self.set_flag(0)
-                return pygame.image.load("grid" + str(num_bombs) + ".png").convert()
+                return pygame.image.load("mines_weeper/sprites/grid" + str(num_bombs) + ".png").convert()
         else :
             if (self.get_flag() == 0) :
-                return pygame.image.load("Grid.png").convert()
+                return pygame.image.load("mines_weeper/sprites/Grid.png").convert()
             if (self.get_flag() == 1) :
-                return pygame.image.load("flag.png").convert()
+                return pygame.image.load("mines_weeper/sprites/flag.png").convert()
             if (self.get_flag() == 2) :
-                return pygame.image.load("question.png").convert()
+                return pygame.image.load("mines_weeper/sprites/question.png").convert()
             
     def reset_sprites(self, matrix, group) :
         sprites = []

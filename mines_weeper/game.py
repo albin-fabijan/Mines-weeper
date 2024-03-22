@@ -24,6 +24,7 @@ class Game(Window):
         self.group = self.group_initialization()
         self.matrix = self.matrix_initialization()
 
+        self.restart = False
         self.final_time = 0
 
         while self.running:
@@ -79,7 +80,10 @@ class Game(Window):
         pygame.quit()
 
         score = ScoreScreen(800, 600)
-        restart = score.run(self.final_time, self.difficulty ,self.win)
+        while (not self.restart) :
+            restart = score.run(self.final_time, self.difficulty ,self.win)
+            if (restart == True) :
+                self.restart = True
     
     def display_timer(self):
         elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000

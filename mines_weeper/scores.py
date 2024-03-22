@@ -1,6 +1,7 @@
 import pygame
 import sys
 import json
+from .paths import Paths
 
 class ScoreScreen:
     def __init__(self):
@@ -20,11 +21,12 @@ class ScoreScreen:
     def afficher_score(self, timer):
         # Chargement de l'image de fond
         self.screen.fill(self.BRUN)
-        background_img = pygame.image.load('menu_background.png')
+        image = pygame.image.load(Paths().select_sprite("menu_background.png"))
+        background_img = pygame.image.load(Paths().select_sprite("menu_background.png"))
         background_img = pygame.transform.scale(background_img, (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
 
         # Chargement de l'image du score
-        button_img = pygame.image.load('button.png')
+        button_img = pygame.image.load(Paths().select_sprite('button.png'))
         button_img = pygame.transform.scale(button_img, (450, 100))
 
         # Affichage du score
@@ -37,7 +39,7 @@ class ScoreScreen:
         self.screen.blit(button_img, (self.SCREEN_WIDTH // 2 - button_img.get_width() // 2, 50))
 
         # Affichage du bouton "Recommencer" avec le texte
-        restart_button_img = pygame.image.load('select.png')
+        restart_button_img = pygame.image.load(Paths().select_sprite('select.png'))
         restart_button_img = pygame.transform.scale(restart_button_img, (200, 100))
         restart_text = self.font.render("Recommencer", True, self.BEIGE)
         restart_rect = restart_text.get_rect(center=(restart_button_img.get_width() // 2, restart_button_img.get_height() // 2))
@@ -45,7 +47,7 @@ class ScoreScreen:
         self.screen.blit(restart_button_img, (self.SCREEN_WIDTH - 250, self.SCREEN_HEIGHT - 150))
 
         # Affichage du bouton "Quitter" avec le texte
-        quit_button_img = pygame.image.load('select.png')
+        quit_button_img = pygame.image.load(Paths().select_sprite('select.png'))
         quit_button_img = pygame.transform.scale(quit_button_img, (200, 100))
         quit_text = self.font.render("Quitter", True, self.BEIGE)
         quit_rect = quit_text.get_rect(center=(quit_button_img.get_width() // 2, quit_button_img.get_height() // 2))
@@ -82,20 +84,10 @@ class ScoreScreen:
             json.dump(data, json_file)
             json_file.write("\n")
 
-    def run(self):
-        timer = 60  # Exemple de timer
-        niveau = 1  # Exemple de niveau de difficulté
-        result = True  # Exemple de resultat
-
-        self.afficher_score(timer)
-        
-        self.afficher_resultat_et_niveau(result, niveau)
-
-
-    def run(self):
-        timer = 60  # Exemple de timer
-        niveau = 1  # Exemple de niveau de difficulté
-        result = True  # Exemple de resultat
+    def run(self, game_timer, level, game_result):
+        timer = game_timer  # Exemple de timer
+        niveau = level  # Exemple de niveau de difficulté
+        result = game_result  # Exemple de resultat
 
         self.afficher_score(timer)
         self.afficher_resultat_et_niveau(result, niveau)
@@ -116,7 +108,7 @@ class ScoreScreen:
                     elif self.SCREEN_WIDTH - 250 <= mouse_pos[0] <= self.SCREEN_WIDTH - 50 and self.SCREEN_HEIGHT - 150 <= mouse_pos[1] <= self.SCREEN_HEIGHT - 50:
                         print("Recommencer")
                         pygame.quit()
-                        sys.exit()
+                        return True
 
 # Exemple d'utilisation de la classe ScoreScreen
 if __name__ == "__main__":

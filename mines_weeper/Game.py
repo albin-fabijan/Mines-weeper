@@ -4,14 +4,15 @@ from .window import Window
 from .ClickableSprite import ClickableSprite
 from . import Case as C
 from .Matrix import Matrix
-#from .scores import scores
+from .scores import ScoreScreen
 
 class Game(Window):
-    def __init__(self, matrix_size, bomb_number_range):
+    def __init__(self, matrix_size, bomb_number_range, difficulty):
         super().__init__(matrix_size * 32, matrix_size * 32 + 64)
 
         self.matrix_size = matrix_size
         self.bomb_number_range = bomb_number_range
+        self.difficulty = difficulty
         self.start_time = pygame.time.get_ticks()
 
         self.background_image = pygame.image.load("background_ingame.png")
@@ -36,9 +37,13 @@ class Game(Window):
             self.group
         )
 
+        self.win = False
+
         for i in range(self.matrix.get_matrix_size()):
             for j in range(self.matrix.get_matrix_size()):
                 self.group.add(self.matrix.get_case((i,j)).get_sprite())
+
+        self.final_time = 0
 
         while self.running:
             events = pygame.event.get()
@@ -48,24 +53,34 @@ class Game(Window):
                     break
 
                 if self.matrix.check_lose():
-                    #pygame.time.wait(3000)
+                    self.final_time = elapsed_time
+                    pygame.time.wait(3000)
                     print("lose")
-                    #pygame.quit()
-                    #scores( False , elapsed_time)
+                    self.running = False
+                    self.win = False
+                    #ScoreScreen(False , elapsed_time)
                 if self.matrix.check_win():
-                    #pygame.time.wait(3000)
+                    self.final_time = elapsed_time
+                    pygame.time.wait(3000)
                     print("win")
-                    #pygame.quit()
-                    #scores( True , elapsed_time)
+                    self.running = False
+                    self.win = True
+                    #ScoreScreen(True , elapsed_time)
                 
             self.group.update(events)
             self.screen.fill((255, 255, 255))
             self.screen.blit(self.background_image, (0, 0))
             self.group.draw(self.screen)
             elapsed_time = self.display_timer()
+            self.display_numbombs()
+            self.display_numflags()
+            self.display_numinterro()
             pygame.display.flip()
         
         pygame.quit()
+
+        score = ScoreScreen()
+        score.run(self.final_time, self.difficulty ,self.win)
     
     def display_timer(self):
         elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000
@@ -78,24 +93,42 @@ class Game(Window):
         self.screen.blit(timer_text, (5, 10))
         return elapsed_time
     
+    def display_numbombs(self):
+        font = pygame.font.SysFont(None, 30)
+        timer_text = font.render(f"Bombs: {self.num_bombs()- self.num_flags()}", True, (0, 0, 0))
+        self.screen.blit(timer_text, (5, 30))
+        return
+
+    def display_numflags(self):
+        font = pygame.font.SysFont(None, 30)
+        timer_text = font.render(f"Flags: {self.num_flags()}", True, (0, 0, 0))
+        self.screen.blit(timer_text, (self.matrix_size * 15, 10))
+        return
+    
+    def display_numinterro(self):
+        font = pygame.font.SysFont(None, 30)
+        timer_text = font.render(f"?: {self.num_interrogations()}", True, (0, 0, 0))
+        self.screen.blit(timer_text, (self.matrix_size * 15, 30))
+        return
+
     def num_bombs(self) :
         bombs = 0
         for c in self.matrix.get_cases() :
-            if (c.get_bomb()) :
+            if (c.bomb) :
                 bombs += 1
         return bombs
     
     def num_flags(self) :
         flags = 0
         for c in self.matrix.get_cases() :
-            if (c.get_flag() == 1) :
+            if (c.flag == 1) :
                 flags += 1
         return flags
     
     def num_interrogations(self) :
         interro = 0
         for c in self.matrix.get_cases() :
-            if (c.get_flag() == 2) :
+            if (c.flag == 2) :
                 interro += 1
         return interro
 

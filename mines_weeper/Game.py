@@ -77,6 +77,27 @@ class Game(Window):
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, (0, 0, 0))
         self.screen.blit(timer_text, (5, 10))
         return elapsed_time
+    
+    def num_bombs(self) :
+        bombs = 0
+        for c in self.matrix.get_cases() :
+            if (c.get_bomb()) :
+                bombs += 1
+        return bombs
+    
+    def num_flags(self) :
+        flags = 0
+        for c in self.matrix.get_cases() :
+            if (c.get_flag() == 1) :
+                flags += 1
+        return flags
+    
+    def num_interrogations(self) :
+        interro = 0
+        for c in self.matrix.get_cases() :
+            if (c.get_flag() == 2) :
+                interro += 1
+        return interro
 
     def on_left_click(self):
         sprite.image = pygame.image.load(Paths().select_sprite("empty.png")).convert()

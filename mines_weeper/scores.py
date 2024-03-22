@@ -108,8 +108,7 @@ class ScoreScreen:
                     elif self.SCREEN_WIDTH - 250 <= mouse_pos[0] <= self.SCREEN_WIDTH - 50 and self.SCREEN_HEIGHT - 150 <= mouse_pos[1] <= self.SCREEN_HEIGHT - 50:
                         print("Recommencer")
                         pygame.quit()
-                        #return True
-                        sys.exit()
+                        return True
 
 # Exemple d'utilisation de la classe ScoreScreen
 if __name__ == "__main__":

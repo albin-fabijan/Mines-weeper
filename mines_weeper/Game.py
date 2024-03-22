@@ -38,6 +38,7 @@ class Game(Window):
         )
 
         self.win = False
+        self.restart = False
 
         for i in range(self.matrix.get_matrix_size()):
             for j in range(self.matrix.get_matrix_size()):
@@ -80,7 +81,11 @@ class Game(Window):
         pygame.quit()
 
         score = ScoreScreen()
-        score.run(self.final_time, self.difficulty ,self.win)
+        while (not self.restart) :
+            restart = score.run(self.final_time, self.difficulty ,self.win)
+            if (restart == True) :
+                self.restart = True
+        print("choose to restart")
     
     def display_timer(self):
         elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000

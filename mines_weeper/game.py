@@ -4,7 +4,7 @@ from .window import Window
 from .clickable_sprite import ClickableSprite
 from .case import Case as C
 from .matrix import Matrix
-from .scores import ScoreScreen
+from .score_screen import ScoreScreen
 
 class Game(Window):
     def __init__(self, matrix_size, bomb_number_range, difficulty):
@@ -78,7 +78,7 @@ class Game(Window):
         
         pygame.quit()
 
-        score = ScoreScreen()
+        score = ScoreScreen(800, 600)
         restart = score.run(self.final_time, self.difficulty ,self.win)
     
     def display_timer(self):

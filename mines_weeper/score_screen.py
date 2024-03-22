@@ -2,13 +2,15 @@ import pygame
 import sys
 import json
 from .paths import Paths
+from .window import Window
 
-class ScoreScreen:
-    def __init__(self):
+class ScoreScreen(Window):
+    def __init__(self, WIDTH, HEIGHT):
+        super().__init__(WIDTH, HEIGHT)
         pygame.init()
 
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 800, 600
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.SCREEN_WIDTH = WIDTH
+        self.SCREEN_HEIGHT = HEIGHT
         pygame.display.set_caption("Affichage des Scores")
 
         self.WHITE = (255, 255, 255)

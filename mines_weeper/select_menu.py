@@ -2,7 +2,7 @@ import pygame
 import json
 from .paths import Paths
 from .window import Window
-from .Game import Game
+from .game import Game
 
 class SelectMenu(Window):
     def __init__(self):

@@ -1,7 +1,7 @@
 import pygame
 
 from .paths import Paths
-from .ClickableSprite import ClickableSprite
+from .clickable_sprite import ClickableSprite
 
 class Case(pygame.sprite.Sprite) :
 

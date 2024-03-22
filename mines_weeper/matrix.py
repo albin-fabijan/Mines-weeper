@@ -1,4 +1,4 @@
-from .Case import Case
+from .case import Case
 import random
 import pygame
 

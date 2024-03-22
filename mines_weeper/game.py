@@ -1,9 +1,9 @@
 import pygame
 from .paths import Paths
 from .window import Window
-from .ClickableSprite import ClickableSprite
-from . import Case as C
-from .Matrix import Matrix
+from .clickable_sprite import ClickableSprite
+from .case import Case as C
+from .matrix import Matrix
 from .scores import ScoreScreen
 
 class Game(Window):

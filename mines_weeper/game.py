@@ -15,7 +15,7 @@ class Game(Window):
         self.difficulty = difficulty
         self.start_time = pygame.time.get_ticks()
 
-        self.background_image = pygame.image.load("background_ingame.png")
+        self.background_image = pygame.image.load(Paths().select_sprite("background_ingame.png"))
         self.background_image = pygame.transform.scale(self.background_image, (matrix_size * 32 , 64))
 
         self.not_clicked = pygame.image.load(Paths().select_sprite("grid.png")).convert()

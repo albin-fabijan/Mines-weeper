@@ -21,25 +21,8 @@ class Game(Window):
         self.not_clicked = pygame.image.load(Paths().select_sprite("grid.png")).convert()
 
         self.sprite = self.sprite_initialization()
-
         self.group = self.group_initialization()
-
-<<<<<<< HEAD
         self.matrix = self.matrix_initialization()
-=======
-        self.matrix = Matrix(
-            self.bomb_number_range,
-            self.matrix_size,
-            self.group
-        )
-
-        self.win = False
-        self.restart = False
-
-        for i in range(self.matrix.get_matrix_size()):
-            for j in range(self.matrix.get_matrix_size()):
-                self.group.add(self.matrix.get_case((i,j)).get_sprite())
->>>>>>> feature/timer
 
         self.final_time = 0
 

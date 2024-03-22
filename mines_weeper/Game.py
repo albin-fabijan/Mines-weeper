@@ -33,8 +33,9 @@ class Game(Window):
                     self.running = False
                     break
 
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    if restart_button_rect.collidepoint(mouse_x, mouse_y):
                         self.start_time = pygame.time.get_ticks()
                         self.sprite = self.sprite_initialization()
                         self.group = self.group_initialization()
@@ -63,16 +64,22 @@ class Game(Window):
             self.display_numbombs()
             self.display_numflags()
             self.display_numinterro()
+            button_img, restart_button_rect = self.get_restart_button()
+            self.screen.blit(button_img, restart_button_rect)
+            self.draw_text(
+                "R",
+                pygame.font.Font(None, 16),
+                (0, 0, 0),
+                self.screen,
+                self.WIDTH - 24,
+                48
+            )
             pygame.display.flip()
         
         pygame.quit()
 
         score = ScoreScreen()
-        while (not self.restart) :
-            restart = score.run(self.final_time, self.difficulty ,self.win)
-            if (restart == True) :
-                self.restart = True
-        print("choose to restart")
+        restart = score.run(self.final_time, self.difficulty ,self.win)
     
     def display_timer(self):
         elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000
@@ -129,6 +136,22 @@ class Game(Window):
 
     def on_right_click(self):
         sprite.image = pygame.image.load(Paths().select_sprite("flag.png")).convert()
+
+    def get_restart_button(self):
+        image = pygame.image.load(Paths().select_sprite("select.png"))
+        scale = image.get_size()
+        button_img = pygame.transform.scale(
+            image,
+            (24, 24)
+        )
+
+        restart_button_rect = button_img.get_rect(
+            center = (
+                self.WIDTH - 24,
+                48
+            )
+        )
+        return button_img, restart_button_rect
 
     def sprite_initialization(self):
         sprite = ClickableSprite(

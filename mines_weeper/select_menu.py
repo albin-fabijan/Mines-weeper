@@ -93,11 +93,15 @@ class SelectMenu(Window):
 
         return player_name_rect, easy_button_rect, normal_button_rect, expert_button_rect
     
-    def save_player_name(self, difficulty):
-        if self.player_name:
-            data = {"player_name": self.player_name, "difficulté :" :difficulty}
-            with open("save.json", "w") as file:
-                json.dump(data, file)
+    def save_player_name(self, difficulty, player_name):
+        data = {
+            "player_name": player_name,
+            "difficulty": difficulty
+        }
+
+        with open('save.json', 'a') as file:
+            json.dump(data, file)
+            file.write('\n')
 
     def input_loop(
         self,
@@ -132,22 +136,22 @@ class SelectMenu(Window):
                 if len(self.player_name) == 0:
                     continue
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):
+                    self.save_player_name("easy", self.player_name)
                     game = Game(8,(6, 8),1)
-                    self.save_player_name("easy")
                     self.running = False
                     pygame.quit()
                     break
 
                 elif normal_button_rect.collidepoint(mouse_x, mouse_y):
+                    self.save_player_name("normal",self.player_name)
                     game = Game(12, (16, 24), 2)
-                    self.save_player_name("normal")
                     self.running = False
                     pygame.quit()
                     break
 
                 elif expert_button_rect.collidepoint(mouse_x, mouse_y):
+                    self.save_player_name("expert",self.player_name)
                     game = Game(16, (48, 64), 3)
-                    self.save_player_name("expert")
                     self.running = False
                     pygame.quit()
                     break

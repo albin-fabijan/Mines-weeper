@@ -19,26 +19,11 @@ class Game(Window):
 
         self.not_clicked = pygame.image.load(Paths().select_sprite("grid.png")).convert()
 
-        self.sprite = ClickableSprite(
-            self.not_clicked,
-            50,
-            50,
-            self.on_left_click,
-            self.on_right_click
-        )
+        self.sprite = self.sprite_initialization()
 
-        self.group = pygame.sprite.Group(self.sprite)
-        self.group.remove(self.sprite)
+        self.group = self.group_initialization()
 
-        self.matrix = Matrix(
-            self.bomb_number_range,
-            self.matrix_size,
-            self.group
-        )
-
-        for i in range(self.matrix.get_matrix_size()):
-            for j in range(self.matrix.get_matrix_size()):
-                self.group.add(self.matrix.get_case((i,j)).get_sprite())
+        self.matrix = self.matrix_initialization()
 
         while self.running:
             events = pygame.event.get()
@@ -46,6 +31,13 @@ class Game(Window):
                 if event.type == pygame.QUIT:
                     self.running = False
                     break
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.start_time = pygame.time.get_ticks()
+                        self.sprite = self.sprite_initialization()
+                        self.group = self.group_initialization()
+                        self.matrix = self.matrix_initialization()
 
                 if self.matrix.check_lose():
                     #pygame.time.wait(3000)
@@ -104,3 +96,33 @@ class Game(Window):
 
     def on_right_click(self):
         sprite.image = pygame.image.load(Paths().select_sprite("flag.png")).convert()
+
+    def sprite_initialization(self):
+        sprite = ClickableSprite(
+            self.not_clicked,
+            50,
+            50,
+            self.on_left_click,
+            self.on_right_click
+        )
+
+        return sprite
+
+    def group_initialization(self):
+        group = pygame.sprite.Group(self.sprite)
+        group.remove(self.sprite)
+
+        return group
+
+    def matrix_initialization(self):
+        matrix = Matrix(
+            self.bomb_number_range,
+            self.matrix_size,
+            self.group
+        )
+
+        for i in range(matrix.get_matrix_size()):
+            for j in range(matrix.get_matrix_size()):
+                self.group.add(matrix.get_case((i,j)).get_sprite())
+
+        return matrix

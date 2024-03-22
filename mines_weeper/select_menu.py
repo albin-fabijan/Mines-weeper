@@ -108,6 +108,8 @@ class SelectMenu(Window):
     ):
         if not self.running:
             return
+        
+        restart = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -130,25 +132,32 @@ class SelectMenu(Window):
                 if len(self.player_name) == 0:
                     continue
                 if easy_button_rect.collidepoint(mouse_x, mouse_y):
-                    Game(8,(6, 8),1)
+                    game = Game(8,(6, 8),1)
+                    restart = game.restart
                     self.save_player_name("easy")
                     self.running = False
                     pygame.quit()
                     break
 
                 elif normal_button_rect.collidepoint(mouse_x, mouse_y):
-                    Game(12, (16, 24), 2)
+                    game = Game(12, (16, 24), 2)
+                    restart = game.restart
                     self.save_player_name("normal")
                     self.running = False
                     pygame.quit()
                     break
 
                 elif expert_button_rect.collidepoint(mouse_x, mouse_y):
-                    Game(16, (48, 64), 3)
+                    game = Game(16, (48, 64), 3)
+                    restart = game.restart
                     self.save_player_name("expert")
                     self.running = False
                     pygame.quit()
                     break
+
+        if (restart) :
+            self.__init__()
+        
     def display(
         self,
         player_name_rect,

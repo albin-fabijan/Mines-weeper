@@ -72,7 +72,6 @@ class Matrix :
         return neighbors
 
     def click(self, pos:tuple) :
-        print("click")
         if (self.__first_click) :
             self.__first_click = False
             self.first_click(pos)

@@ -73,9 +73,9 @@ class Game(Window):
             self.group.draw(self.screen)*
 
             elapsed_time = self.display_timer()
-            self.display_numbombs()
-            self.display_numflags()
-            self.display_numinterro()
+            self.display_bomb_number()
+            self.display_flag_number()
+            self.display_question_number()
 
             button_img, restart_button_rect = self.get_restart_button()
             self.screen.blit(button_img, restart_button_rect)
@@ -93,7 +93,7 @@ class Game(Window):
         pygame.quit()
 
         score = ScoreScreen(800, 600)
-        while (not self.restart):
+        while not self.restart:
             restart = score.run(self.final_time, self.difficulty ,self.win)
             if (restart == True):
                 self.restart = True
@@ -116,51 +116,51 @@ class Game(Window):
         self.screen.blit(timer_text, (5, 10))
         return elapsed_time
     
-    def display_numbombs(self):
+    def display_bomb_number(self):
         font = pygame.font.SysFont(None, 30)
         timer_text = font.render(
-                f"Bombs: {self.num_bombs()- self.num_flags()}",
+                f"Bombs: {self.bomb_number()- self.flag_number()}",
                 True,
                 (0, 0, 0)
         )
         self.screen.blit(timer_text, (5, 30))
         return
 
-    def display_numflags(self):
+    def display_flag_number(self):
         font = pygame.font.SysFont(None, 30)
         timer_text = font.render(
-                f"Flags: {self.num_flags()}",
+                f"Flags: {self.flag_number()}",
                 True,
                 (0, 0, 0)
         )
         self.screen.blit(timer_text, (self.matrix_size * 15, 10))
         return
     
-    def display_numinterro(self):
+    def display_question_number(self):
         font = pygame.font.SysFont(None, 30)
         timer_text = font.render(
-                f"?: {self.num_interrogations()}",
+                f"?: {self.question_number()}",
                 True,
                 (0, 0, 0)
         )
         self.screen.blit(timer_text, (self.matrix_size * 15, 30))
         return
 
-    def num_bombs(self):
+    def bomb_number(self):
         bombs = 0
         for c in self.matrix.get_cases() :
             if (c.bomb) :
                 bombs += 1
         return bombs
     
-    def num_flags(self):
+    def flag_number(self):
         flags = 0
         for c in self.matrix.get_cases() :
             if (c.flag == 1) :
                 flags += 1
         return flags
     
-    def num_interrogations(self):
+    def question_number(self):
         interro = 0
         for c in self.matrix.get_cases() :
             if (c.flag == 2) :

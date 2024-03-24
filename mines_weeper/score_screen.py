@@ -104,11 +104,9 @@ class ScoreScreen(Window):
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if 50 <= mouse_pos[0] <= 250 and self.SCREEN_HEIGHT - 150 <= mouse_pos[1] <= self.SCREEN_HEIGHT - 50:
-                        print("Quitter")
                         pygame.quit()
                         sys.exit()
                     elif self.SCREEN_WIDTH - 250 <= mouse_pos[0] <= self.SCREEN_WIDTH - 50 and self.SCREEN_HEIGHT - 150 <= mouse_pos[1] <= self.SCREEN_HEIGHT - 50:
-                        print("Recommencer")
                         pygame.quit()
                         return True
 

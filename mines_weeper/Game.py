@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 from .Paths import Paths
@@ -40,6 +42,8 @@ class Game(Window):
             for event in events:
                 if event.type == pygame.QUIT:
                     self.running = False
+                    pygame.quit()
+                    sys.exit()
                     break
 
                 if event.type == pygame.MOUSEBUTTONDOWN:

@@ -118,5 +118,3 @@ class Case(pygame.sprite.Sprite):
                 self.set_sprite(pygame.image.load(
                     Paths().select_sprite("question.png")
                 ).convert())
-
-pygame.quit()

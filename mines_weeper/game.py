@@ -13,7 +13,8 @@ class Game(Window):
         self.matrix_size = matrix_size
         self.bomb_number_range = bomb_number_range
         self.difficulty = difficulty
-        self.start_time = pygame.time.get_ticks()
+        self.start_time = 0
+        self.game_started = False
 
         self.background_image = pygame.image.load(Paths().select_sprite("background_ingame.png"))
         self.background_image = pygame.transform.scale(self.background_image, (matrix_size * 32 , 64))
@@ -37,7 +38,8 @@ class Game(Window):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_x, mouse_y = pygame.mouse.get_pos()
                     if restart_button_rect.collidepoint(mouse_x, mouse_y):
-                        self.start_time = pygame.time.get_ticks()
+                        self.start_time = 0
+                        self.game_started = False
                         self.sprite = self.sprite_initialization()
                         self.group = self.group_initialization()
                         self.matrix = self.matrix_initialization()
@@ -52,6 +54,10 @@ class Game(Window):
                     pygame.time.wait(3000)
                     self.running = False
                     self.win = True
+
+            if not self.matrix.get_first_click() and not self.game_started:
+                self.start_time = pygame.time.get_ticks()
+                self.game_started = True
                 
             self.group.update(events)
             self.screen.fill((255, 255, 255))
@@ -82,7 +88,10 @@ class Game(Window):
                 self.restart = True
     
     def display_timer(self):
-        elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000
+        if self.matrix.get_first_click() == True:
+            elapsed_time = 0
+        else:
+            elapsed_time = (pygame.time.get_ticks() - self.start_time) / 1000
         
         minutes = int(elapsed_time // 60)
         seconds = int(elapsed_time % 60)

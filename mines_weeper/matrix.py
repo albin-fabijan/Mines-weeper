@@ -51,6 +51,9 @@ class Matrix :
     def has_lost(self) :
         return self.__lost
 
+    def get_first_click(self):
+        return self.__first_click
+
     def get_neighbors(self, pos:tuple) :
         neighbors = []
         if (pos[0]>0 and pos[1]> 0) :

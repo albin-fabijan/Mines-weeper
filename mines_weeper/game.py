@@ -18,7 +18,7 @@ class Game(Window):
         self.background_image = pygame.image.load(Paths().select_sprite("background_ingame.png"))
         self.background_image = pygame.transform.scale(self.background_image, (matrix_size * 32 , 64))
 
-        self.not_clicked = pygame.image.load(Paths().select_sprite("grid.png")).convert()
+        self.not_clicked = pygame.image.load(Paths().select_sprite("Grid.png")).convert()
 
         self.sprite = self.sprite_initialization()
         self.group = self.group_initialization()

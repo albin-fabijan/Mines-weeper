@@ -47,13 +47,11 @@ class Game(Window):
                     pygame.time.wait(3000)
                     self.running = False
                     self.win = False
-                    #ScoreScreen(False , elapsed_time)
                 if self.matrix.check_win():
                     self.final_time = elapsed_time
                     pygame.time.wait(3000)
                     self.running = False
                     self.win = True
-                    #ScoreScreen(True , elapsed_time)
                 
             self.group.update(events)
             self.screen.fill((255, 255, 255))

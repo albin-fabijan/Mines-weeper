@@ -1,8 +1,11 @@
-import pygame
 import json
+
+import pygame
+
 from .paths import Paths
 from .window import Window
 from .game import Game
+
 
 class SelectMenu(Window):
     def __init__(self):

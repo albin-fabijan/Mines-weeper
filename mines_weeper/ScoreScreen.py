@@ -3,8 +3,8 @@ import json
 
 import pygame
 
-from .paths import Paths
-from .window import Window
+from .Paths import Paths
+from .Window import Window
 
 
 class ScoreScreen(Window):

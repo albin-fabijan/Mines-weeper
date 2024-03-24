@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from .case import Case
+from .Case import Case
 
 class Matrix:
     def __init__(

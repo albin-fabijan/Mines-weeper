@@ -1,3 +1,3 @@
-from mines_weeper.select_menu import SelectMenu
+from mines_weeper.SelectMenu import SelectMenu
 
 SelectMenu()

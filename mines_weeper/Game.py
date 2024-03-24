@@ -1,10 +1,10 @@
 import pygame
 
-from .paths import Paths
-from .window import Window
-from .clickable_sprite import ClickableSprite
-from .matrix import Matrix
-from .score_screen import ScoreScreen
+from .Paths import Paths
+from .Window import Window
+from .ClickableSprite import ClickableSprite
+from .Matrix import Matrix
+from .ScoreScreen import ScoreScreen
 
 class Game(Window):
     def __init__(self, matrix_size, bomb_number_range, difficulty):

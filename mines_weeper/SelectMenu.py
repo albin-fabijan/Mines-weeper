@@ -2,9 +2,9 @@ import json
 
 import pygame
 
-from .paths import Paths
-from .window import Window
-from .game import Game
+from .Paths import Paths
+from .Window import Window
+from .Game import Game
 
 
 class SelectMenu(Window):

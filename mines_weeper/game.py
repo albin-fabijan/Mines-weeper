@@ -70,7 +70,7 @@ class Game(Window):
 
             self.screen.fill((255, 255, 255))
             self.screen.blit(self.background_image, (0, 0))
-            self.group.draw(self.screen)*
+            self.group.draw(self.screen)
 
             elapsed_time = self.display_timer()
             self.display_bomb_number()
@@ -211,11 +211,7 @@ class Game(Window):
         return group
 
     def matrix_initialization(self):
-        matrix = Matrix(
-            self.bomb_number_range,
-            self.matrix_size,
-            self.group
-        )
+        matrix = Matrix(self.bomb_number_range, self.matrix_size, self.group)
 
         for i in range(matrix.get_matrix_size()):
             for j in range(matrix.get_matrix_size()):

@@ -7,27 +7,27 @@ class Case(pygame.sprite.Sprite):
     def __init__(
             self,
             bomb,
-            grid_pos,
+            grid_position,
             matrix,
             group,
             clicked = False,
             flag = 0,
-            num_bombs = -1
+            bomb_number = -1
     ):
         self.bomb = bomb
-        self.grid_pos = grid_pos
+        self.grid_position = grid_position
         self.clicked = clicked
         self.flag = flag
-        self.num_bombs = num_bombs
+        self.bomb_number = bomb_number
         self.not_clicked = pygame.image.load(
                 Paths().select_sprite("Grid.png")
         )
         self.sprite = ClickableSprite(
             self.not_clicked,
-            grid_pos[0] * 32,
-            grid_pos[1] * 32 + 64,
+            grid_position[0] * 32,
+            grid_position[1] * 32 + 64,
             lambda: self.on_left_click(
-                lambda: matrix.click(pos=grid_pos),
+                lambda: matrix.click(position=grid_position),
                 lambda: self.reset_sprites(matrix, group)
             ),
             lambda: self.on_right_click(matrix)
@@ -42,24 +42,24 @@ class Case(pygame.sprite.Sprite):
     def set_flag(self, flag:int):
         self.flag = flag
 
-    def set_num_bombs(self, num:int):
+    def set_bomb_number(self, num:int):
         if (num >= -1 and num <= 8):
-            self.num_bombs = num
+            self.bomb_number = num
 
     def set_sprite(self, image):
         self.sprite.image = image
 
-    def get_clicked_sprite(self, num_bombs:int):
+    def get_clicked_sprite(self, bomb_number:int):
         if (self.clicked):
-            if (num_bombs == -1):
+            if (bomb_number == -1):
                 self.set_flag(0)
                 return pygame.image.load(Paths().select_sprite("mine.png")).convert()
-            if (num_bombs == 0):
+            if (bomb_number == 0):
                 self.set_flag(0)
                 return pygame.image.load(Paths().select_sprite("empty.png")).convert()
-            if (num_bombs >= 1):
+            if (bomb_number >= 1):
                 self.set_flag(0)
-                return pygame.image.load(Paths().select_sprite("grid" + str(self.num_bombs) + ".png")).convert()
+                return pygame.image.load(Paths().select_sprite("grid" + str(self.bomb_number) + ".png")).convert()
         else:
             if (self.flag() == 0):
                 return pygame.image.load(
@@ -82,7 +82,7 @@ class Case(pygame.sprite.Sprite):
             mat_case = matrix.get_cases()[i]
             if (mat_case.clicked):
                 sprites[i].image = mat_case.get_clicked_sprite(
-                        mat_case.num_bombs
+                        mat_case.bomb_number
                 )
         for sprite in group:
             group.remove(sprite)
@@ -94,7 +94,7 @@ class Case(pygame.sprite.Sprite):
         reset_func()
 
     def on_right_click(self, matrix):
-        mat_case = matrix.get_case(self.grid_pos)
+        mat_case = matrix.get_case(self.grid_position)
         if (not mat_case.clicked):
             if (self.flag == 0):
                 self.set_flag(1)

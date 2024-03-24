@@ -1,6 +1,8 @@
-from .case import Case
 import random
+
 import pygame
+
+from .case import Case
 
 class Matrix:
     def __init__(

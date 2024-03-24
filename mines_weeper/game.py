@@ -1,4 +1,5 @@
 import pygame
+
 from .paths import Paths
 from .window import Window
 from .clickable_sprite import ClickableSprite

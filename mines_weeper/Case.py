@@ -37,6 +37,9 @@ class Case(pygame.sprite.Sprite):
         return self.sprite
 
     def set_clicked(self, click:bool):
+        if self.flag != 0:
+            return
+
         self.clicked = click
 
     def set_flag(self, flag:int):
@@ -90,6 +93,9 @@ class Case(pygame.sprite.Sprite):
             group.add(sprite)
 
     def on_left_click(self, click_func, reset_func):
+        if self.flag != 0:
+            return
+
         click_func()
         reset_func()
 

@@ -57,13 +57,13 @@ class Game(Window):
 
                 if self.matrix.check_lose():
                     self.final_time = elapsed_time
-                    pygame.time.wait(3000)
+                    pygame.time.wait(2000)
                     self.running = False
                     self.win = False
 
                 if self.matrix.check_win():
                     self.final_time = elapsed_time
-                    pygame.time.wait(3000)
+                    pygame.time.wait(1000)
                     self.running = False
                     self.win = True
 
